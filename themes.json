@@ -34,5 +34,35 @@
     "main": "#663399",
     "semi": "#bb99cc",
     "text": "#ffffff"
+  },
+  {
+    "name": [ "bsod" ],
+    "main": "#000088",
+    "semi": "#6666bb",
+    "text": "#ffffff"
+  },
+  {
+    "name": [ "hl", "half-life" ],
+    "main": "#222222",
+    "semi": "#996600",
+    "text": "#ff8800"
+  },
+  {
+    "name": [ "sakura", "pinky" ],
+    "main": "#df81dc",
+    "semi": "#ffe2f1",
+    "text": "#ffffff"
+  },
+  {
+    "name": [ "red", "strawberry" ],
+    "main": "#df101f",
+    "semi": "#ffe2f1",
+    "text": "#ffffff"
+  },
+  {
+    "name": [ "blueberry" ],
+    "main": "#4030e0",
+    "semi": "#ffe2f1",
+    "text": "#ffffff"
   }
 ]

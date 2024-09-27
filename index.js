@@ -16,8 +16,28 @@ async function setTheme() {
   
 }
 
+async function loadSinglePost(postArg) {
+  let title = "";
+  let content = "";
+  
+  try {
+    content = await fileFetcher.fetchFile(`https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main/posts/${postArg}`);
+  } catch (e) {
+    content = e;
+  }
+  
+  document.getElementById("content").innerHTML = content;
+  document.getElementById("title").innerHTML = title;
+}
+
 async function main() {
   await setTheme();
+  
+  let postArg = fileFetcher.getURLParams().get("post");
+  
+  if(postArg != null)
+    await loadSinglePost(postArg);
+  
   
 }
 

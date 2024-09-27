@@ -16,6 +16,18 @@ export async function fetchJson(filePath) {
     });
 }
 
+let r = false;
+try {
+  const result = await fetch("ignore/debug_key", { method: "HEAD" });
+  r = result.ok ? true : false;
+} catch (e) {
+  r = false;
+}
+
+export function getContentLink() {
+  return r ? "../PostStorage/" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main/";
+}
+
 export function getURLParams() {
   return new URLSearchParams(window.location.search);
 }
