@@ -24,7 +24,7 @@
     "text": "#ffffff"
   },
   {
-    "name": [ "green_old_pc" ],
+    "name": [ "green_old_pc", "green" ],
     "main": "#08170B",
     "semi": "#286924",
     "text": "#49BB3E"
@@ -42,7 +42,7 @@
     "text": "#ffffff"
   },
   {
-    "name": [ "hl", "half-life" ],
+    "name": [ "half-life", "hl" ],
     "main": "#222222",
     "semi": "#996600",
     "text": "#ff8800"
@@ -63,6 +63,18 @@
     "name": [ "blueberry" ],
     "main": "#4030e0",
     "semi": "#ffe2f1",
+    "text": "#ffffff"
+  },
+  {
+    "name": [ "swamp" ],
+    "main": "#1d371f",
+    "semi": "#9cbb66",
+    "text": "#ffffff"
+  },
+  {
+    "name": [ "sun" ],
+    "main": "#a68b57",
+    "semi": "#e8b779",
     "text": "#ffffff"
   }
 ]

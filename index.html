@@ -17,8 +17,45 @@
     background-color: var(--main);
   }
   
+  .post_link {
+    padding: 10px;
+    float: left;
+    border: 2px solid var(--semi);
+    margin: 3px;
+    
+  }
+  
+  .post_link a:link{
+    color: var(--semi);
+    text-decoration: none;
+  }
+  
+  .post_link a:visited{
+    color: var(--semi);
+  }
+  
+  img {
+    max-width: 99vw;
+  }
+  
+  hr {
+    color: var(--semi);
+  }
+  
+  a:link {
+    color: var(--text);
+  }
+  a:visited {
+    color: var(--semi);
+  }
+  
   #about {
     color: var(--semi);
+  }
+  
+  #select_theme {
+    color: var(--text);
+    background-color: var(--main);
   }
 </style>
 
@@ -28,8 +65,16 @@
     
   </div>
   <div id="about">
-    PostViewer - project to separate rendering posts into separate project to not deploy very often.
-    There you can see my posts.
+    <div>
+      PostViewer - project to separate rendering posts into separate project to not deploy very often.
+      There you can see my posts.
+      <a href="index.html">Back to Browser</a>
+    </div>
+    <div>
+      Also you can choose the theme
+      <select id="select_theme">
+      </select>
+    </div>
   </div>
   
   <script type="module" src="./index.js"></script>

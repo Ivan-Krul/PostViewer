@@ -25,7 +25,11 @@ try {
 }
 
 export function getContentLink() {
-  return r ? "../PostStorage/" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main/";
+  return r ? "../PostStorage" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main";
+}
+
+export function getDomainLink() {
+  return "..";
 }
 
 export function getURLParams() {
