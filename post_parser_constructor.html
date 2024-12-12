@@ -4,54 +4,8 @@
 <head>
   <title>Post Constructor</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link href="style.css" rel="stylesheet" type="text/css">
 </head>
-
-<style>
-  :root {
-    --main: #000000;
-    --semi: #808080;
-    --text: #ffffff;
-  }
-  
-  body {
-    color: var(--text);
-    background-color: var(--main);
-  }
-  
-  td {
-    border: 2px solid var(--text);
-  }
-
-  img {
-    max-width: 99vw;
-  }
-  
-  hr {
-    color: var(--semi);
-  }
-  
-  a:link {
-    color: var(--text);
-  }
-  a:visited {
-    color: var(--semi);
-  }
-  
-  #select_theme {
-    color: var(--text);
-    background-color: var(--main);
-  }
-  
-  #input_container {
-    color: var(--semi);
-  }
-  
-  textarea, button, input {
-    color: var(--text);
-    background-color: var(--main);
-  }
-  
-</style>
 
 <body>
   <div id="input_container">
@@ -63,6 +17,7 @@
         
     <button id="buttonSave">Save</button>
     <select id="select_theme"></select>
+    <div><label for="checkbox_render">Output every time you type the text: </label><input type="checkbox" id="checkbox_render"></input><button id="button_force_render">Render</button></div>
   </div>
   <hr>
   <h1 id="title"></h1>
@@ -84,7 +39,7 @@
     import * as PostParser from "./post_parser.js";
     import * as themes from "./themes.js";
 
-    const localstorageDir = "saved_post_parser_text";
+    const LOCALSTORAGE_DIR = "saved_post_parser_text";
     await themes.pinThemeSelector();
 
     function updateRaw(text) {
@@ -97,7 +52,8 @@
       PostParser.appendParsedPostToDOM(document.getElementById("output").innerHTML, document.getElementById("output"));
     }
     function update(event) {
-      updateRaw(event.target.value);
+      if(document.getElementById("checkbox_render").checked)
+        updateRaw(event.target.value);
     }
 
     function generateAtlas() {
@@ -117,8 +73,12 @@
     }
 
     function save() {
-      localStorage.setItem(localstorageDir, document.getElementById("input").value);
+      localStorage.setItem(LOCALSTORAGE_DIR, document.getElementById("input").value);
       alert("text was saved!");
+    }
+
+    function setAutoRender(e) {
+      document.getElementById("button_force_render").disabled = e.target.checked;
     }
 
     document.getElementById("buttonSave").onclick = save;
@@ -129,22 +89,25 @@
         save();
       }
     });
-
+    
+    document.getElementById("checkbox_render").onchange = setAutoRender;
+    document.getElementById("button_force_render").onclick = () => updateRaw(document.getElementById("input").value);
+    
     generateAtlas();
     document.getElementById("input").onkeyup = update;
 
-    if (localStorage.getItem(localstorageDir) === undefined) {
-      localStorage.setItem(localstorageDir, document.getElementById("input").value);
+    if (localStorage.getItem(LOCALSTORAGE_DIR) === undefined) {
+      localStorage.setItem(LOCALSTORAGE_DIR, document.getElementById("input").value);
     }
     else {
-      document.getElementById("input").value = localStorage.getItem(localstorageDir);
+      document.getElementById("input").value = localStorage.getItem(LOCALSTORAGE_DIR);
     }
 
     document.getElementById("langArg").onchange = () => {
       updateRaw(document.getElementById("input").value);
     }
 
-    updateRaw(localStorage.getItem(localstorageDir));
+    updateRaw(localStorage.getItem(LOCALSTORAGE_DIR));
   </script>
 
 </body>
