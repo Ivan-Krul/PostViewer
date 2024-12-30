@@ -1,5 +1,6 @@
 import * as fileFetcher from "./file_fetcher.js";
 import * as temp from "./temp.js";
+import * as postScratcher from "./post_scratcher.js";
 
 function replaceAllOccurrences(inputString, substringToReplace, replacementValue) {
   var escapedSubstring = substringToReplace.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -78,11 +79,6 @@ export const dictionary =
     ["\"*", "\""],
     ["*\"", "\""],
 
-    ["<!github ", "<a target=\"_blank\" href=\"https://github.com/"],
-    ["<!twitter ", "<a target=\"_blank\" href=\"https://twitter.com/"],
-    ["<!youtube ", "<a target=\"_blank\" href=\"https://www.youtube.com/"],
-    [" !>", "</a>"],
-
     ["<<cr ", `<a target=\"_blank\" href="../CharacterRegister/`],
     [" cr>>", "</a>"],
 
@@ -117,10 +113,10 @@ export const dictionary =
     ["!|", "<br/>"]
   ];
 
-export var ignoreList = [];
+var ignoreList = [];
 
-export const ignoreParsingOpen = "##>";
-export const ignoreParsingClose = "<##";
+const ignoreParsingOpen = "##>";
+const ignoreParsingClose = "<##";
 
 function cropIgnored(str = "") {
   ignoreList = [];
@@ -219,24 +215,3 @@ export function parseRawPost(str = "", forcedLang = undefined) {
   return revertIgnored(res);
 }
 
-export function appendParsedPostToDOM(parsedContent) {
-  document.getElementById("temp").innerHTML = "";
-
-  const scriptRegexSrc = /<script type="module" src="([^"]+)"><\/script>/g;
-  let match;
-  while ((match = scriptRegexSrc.exec(parsedContent)) !== null) {
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src = match[1];
-    document.getElementById("temp").appendChild(script);
-  }
-
-  const scriptRegexInline = /<script type="module">(.*?)<\/script>/gs;
-  while ((match = scriptRegexInline.exec(parsedContent)) !== null) {
-    const scriptContent = match[1];
-    const script = document.createElement("script");
-    script.type = "module";
-    script.textContent = scriptContent;
-    document.getElementById("temp").appendChild(script);
-  }
-}
