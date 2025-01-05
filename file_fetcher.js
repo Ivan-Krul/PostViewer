@@ -34,7 +34,7 @@ export function getContentLink() {
   if(ds)
     return ds;
   else if(s)
-    return r ? `../${s}Storage` : "https://raw.githubusercontent.com/Ivan-Krul/${s}Storage/main";
+    return r ? `../${s}Storage` : `https://raw.githubusercontent.com/Ivan-Krul/Post${s}/main`;
   else 
     return r ? "../PostStorage" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main";
 }
