@@ -24,14 +24,22 @@ try {
   r = false;
 }
 
+export function getURLParams() {
+  return new URLSearchParams(window.location.search);
+}
+
 export function getContentLink() {
-  return r ? "../PostStorage" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main";
+  let ds = getURLParams().get("direct_storage");
+  let s = getURLParams().get("storage");
+  if(ds)
+    return ds;
+  else if(s)
+    return r ? `../${s}Storage` : "https://raw.githubusercontent.com/Ivan-Krul/${s}Storage/main";
+  else 
+    return r ? "../PostStorage" : "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main";
 }
 
 export function getDomainLink() {
   return "..";
 }
 
-export function getURLParams() {
-  return new URLSearchParams(window.location.search);
-}

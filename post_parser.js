@@ -1,6 +1,9 @@
 import * as fileFetcher from "./file_fetcher.js";
 import * as temp from "./temp.js";
-import * as postScratcher from "./post_scratcher.js";
+import * as postBase from "./post_base.js";
+import * as postRocket from "./post_rocket.js";
+
+
 
 function replaceAllOccurrences(inputString, substringToReplace, replacementValue) {
   var escapedSubstring = substringToReplace.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -107,7 +110,7 @@ export const dictionary =
     ["|$- ", `<script type=\"module\" src=\"`],
     [" -$|", "\"></script>"],
 
-    ["|$ ", `<script type=\"module\">import * as fileFetcher from "./file_fetcher.js";`],
+    ["|$ ", `<script type=\"module\">`],
     [" $|", "</script>"],
 
     ["!|", "<br/>"]
@@ -188,12 +191,15 @@ function revertIgnored(cleanStr = "") {
 }
 
 function adaptRawString(str = "", forcedLang = undefined) {
-  let strCom = str.replaceAll("\r", "");
+  let strCom = postBase.cropVersion(str);
   let langCom = getLangTag(strCom, forcedLang);
   return cropIgnored(langCom);
 }
 
 export function parseRawTitle(str = "", forcedLang = undefined) {
+  let ver = postBase.pickVersion(str);
+  if(ver === postRocket.VERSION_IMPORT) return postRocket.parseRawTitle(str);
+  
   let res = adaptRawString(str,forcedLang);
 
   if(res.indexOf(titleOpen) !== -1 && res.indexOf(titleClose) !== -1) {
@@ -204,6 +210,9 @@ export function parseRawTitle(str = "", forcedLang = undefined) {
 }
 
 export function parseRawPost(str = "", forcedLang = undefined) {
+  let ver = postBase.pickVersion(str);
+  if(ver === postRocket.VERSION_IMPORT) return postRocket.parseRawPost(str);
+  
   let res = adaptRawString(str, forcedLang);
 
   dictionary.forEach((regex_value) => {
