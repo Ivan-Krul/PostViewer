@@ -9,7 +9,7 @@ They are representing a simple way to make tags possible and save space.
 # Symbol rule
 That order of first 2 lines is necessary to work.
 ```
-V=> rocker <=V
+V=> rocket <=V
 -- (title) --
 ```
 
