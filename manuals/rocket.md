@@ -35,7 +35,8 @@ You can load:
 
 With goods you can use rockets' representation of tags:
 `~&>`   - this rocket carries html tag
-`~I>`   - this rocket carries image tag
+`~I>`   - this rocket carries image tag (in content it accepts the link)
+`~IL>`  - this rocket carries image tag (same for `~I>`, but for image directory in Post-like repos only)
 `~CSS>` - this rocket carries css tag
 `~JS>`  - this rocket carries js
 `~JS&>` - this rocket carries js module
@@ -59,7 +60,20 @@ With radar you can link you webpages. It has to be an argument to the radar.
 ```
 ~L)https://wikipedia.org)>
 Here's the link to the wikipedia
+~>
+!
 ```
+Radar rockets would not move the content to the newline. To create a line with a rocket radar, you have to put the rocket radar inside the rocket body
+```
+~=
+I'm presenting...
+~L)https://wikipedia.org)>
+Here's the link to the wikipedia
+=
+ and thanks for the presentation
+=>
+```
+
 
 With body, you can put multiple rockets inside the rocket. You can put goods within.
 ```

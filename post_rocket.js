@@ -57,6 +57,7 @@ export const DICTIONARY = {
   "ROCKET_LOADS": {
     "HTML": "&",
     "IMAGE": "I",
+    "IMAGE_LOCAL": "IL",
     "LINK": "L",
     "CSS": "CSS",
     "JS": "JS",
@@ -71,6 +72,8 @@ function loadBottomPayload(payload) {
     return `<${EMPTY_LOAD_UNWRAP}>`;
   else if(payload === DICTIONARY.ROCKET_LOADS.IMAGE)
     return `<image src="`;
+  else if(payload === DICTIONARY.ROCKET_LOADS.IMAGE_LOCAL)
+    return `<image src="${fileFetcher.getContentLink()}/image/`;
   else if(payload.substr(0,DICTIONARY.ROCKET_LOADS.LINK.length) === DICTIONARY.ROCKET_LOADS.LINK)
     return `<a target="_blank" href="`;
   else if(payload === DICTIONARY.ROCKET_LOADS.CSS)
@@ -87,6 +90,8 @@ function loadTopPayload(payload) {
   if(payload === "" || payload === DICTIONARY.ROCKET_LOADS.HTML)
     return `</${EMPTY_LOAD_UNWRAP}>`;
   else if(payload === DICTIONARY.ROCKET_LOADS.IMAGE)
+    return `">`;
+  else if(payload === DICTIONARY.ROCKET_LOADS.IMAGE_LOCAL)
     return `">`;
   else if(payload.substr(0,DICTIONARY.ROCKET_LOADS.LINK.length) === DICTIONARY.ROCKET_LOADS.LINK)
     return `</a>`;
