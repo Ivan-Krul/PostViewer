@@ -27,6 +27,14 @@ function insertArguments(post) {
       return ``;
 }
 
+function snipPartitionRowPath(str) {
+  return str.indexOf('\t') !== -1 ? str.substring(0,str.indexOf('\t')) : str;
+}
+
+function snipPartitionRowTitle(str) {
+  return str.indexOf('\t') !== -1 ? str.substring(str.indexOf('\t') + 1) : undefined;
+}
+
 async function loadMultiplePosts(postArg) {
   let content = "";
   let contentLinks = [];
@@ -42,10 +50,11 @@ async function loadMultiplePosts(postArg) {
   
   for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg); i--) {
     try {
-      content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${contentLinks[i]}`);
+      const path = snipPartitionRowPath(contentLinks[i]);
+      content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/path}`);
       var title = postParser.parseRawTitle(content);
   
-      var dateArr = contentLinks[i].split("_");
+      var dateArr = path.split("_");
       var date = `${dateArr[2]}. ${dateArr[1].substring(dateArr[1].indexOf(')') + 1)}. ${dateArr[0]}`;
       document.getElementById("content").innerHTML += `<hr/><h1>${title} (${date})</h1>${postParser.parseRawPost(content)}`;
     } catch (e) {
@@ -58,9 +67,10 @@ async function loadMultiplePosts(postArg) {
 
 async function loadSinglePost(postArg) {
   let content = "";
-  
+  const path = snipPartitionRowPath(postArg);
+      
   try {
-    content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${postArg}`);
+    content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${path}`);
   } catch (e) {
     document.getElementById("content").innerHTML = e;  
     return;
@@ -68,7 +78,7 @@ async function loadSinglePost(postArg) {
   
   let title = postParser.parseRawTitle(content);
   
-  let dateArr = postArg.split("_");
+  let dateArr = path.split("_");
   
   let date = `${dateArr[2].substr(0, 2)}. ${dateArr[1].substr(dateArr[1].indexOf(')') + 1)}. ${dateArr[0]}`;
   
@@ -89,10 +99,25 @@ async function loadBrowserList() {
     return;
   }
   
+  let wasTitle = snipPartitionRowTitle(contentLinks[contentLinks.length - 1]);
+  
   for(let i = contentLinks.length -1; i >= 0; i--) {
-    const link = contentLinks[i];
+    const link = snipPartitionRowPath(contentLinks[i]);
+    const title = snipPartitionRowTitle(contentLinks[i]);
     
-    document.getElementById("content").innerHTML += `<div class="post_link"><a href="${insertArguments(link)}">${link}</a></div>`;
+    if(wasTitle !== (title === undefined))
+      document.getElementById("content").innerHTML += `<br style="clear: left;"/>`;
+    
+    wasTitle = (title === undefined);
+    
+    if(title === undefined)
+      document.getElementById("content").innerHTML += `<div class="post_link"><a href="${insertArguments(link)}">${link}</a></div>`;  
+    else {
+      let dateArr = link.split("_");
+      let date = `${dateArr[2].substr(0, 2)}. ${dateArr[1].substr(dateArr[1].indexOf(')') + 1)}. ${dateArr[0]}`;
+      
+      document.getElementById("content").innerHTML += `<div class="post_link"><a href="${insertArguments(link)}">${title}<br/>(${date})</a></div>`;
+    }
   }
   
   document.getElementById("content").innerHTML += "<div style=\"clear: left;\">";
