@@ -72,9 +72,15 @@
 "text": "#ffffff"
 },
 {
-"name": [ "sun" ],
+"name": [ "sand" ],
 "main": "#a68b57",
 "semi": "#e8b779",
 "text": "#ffffff"
+},
+{
+"name": [ "sun" ],
+"main": "#ffffff",
+"semi": "#e0c000",
+"text": "#ff7f3f"
 }
 ]

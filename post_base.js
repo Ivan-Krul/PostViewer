@@ -14,7 +14,9 @@ export function pickVersion(str) {
 }
 
 export function cropVersion(str) {
-  return str.substr(str.indexOf('\n') + 1).replaceAll('\r', '');
+  if(str.indexOf("T=>") === -1 && str.indexOf("<=T") === -1)
+    return str.substr(str.indexOf('\n') + 1).replaceAll('\r', '');
+  else return str;
 }
 
 export function appendParsedPostToDOM(parsedContent) {

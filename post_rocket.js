@@ -107,7 +107,8 @@ function loadTopPayload(payload) {
 
 export function parseRawTitle(str = "") {
   let text = str.substr(str.indexOf('\n') + 1);
-  text = text.substr(0, text.indexOf('\n')).replaceAll('\r');
+  
+  text = text.substr(0, text.indexOf('\n')).replaceAll('\r', '');
   
   text.trim();
   
