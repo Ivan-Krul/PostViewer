@@ -82,5 +82,11 @@
 "main": "#ffffff",
 "semi": "#e0c000",
 "text": "#ff7f3f"
+},
+{
+"name": [ "newspaper", "iris newspaper" ],
+"main": "#d8d5db",
+"semi": "#8b828e",
+"text": "#44354A"
 }
 ]

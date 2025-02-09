@@ -51,7 +51,7 @@ async function loadMultiplePosts(postArg) {
   for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg); i--) {
     try {
       const path = snipPartitionRowPath(contentLinks[i]);
-      content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/path}`);
+      content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${path}`);
       var title = postParser.parseRawTitle(content);
   
       var dateArr = path.split("_");
