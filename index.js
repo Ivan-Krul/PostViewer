@@ -3,20 +3,28 @@ import * as postParser from "./post_parser.js";
 import * as postBase from "./post_base.js";
 import * as themes from "./themes.js";
 
-function insertStorageArg() {
-  var ds = fileFetcher.getURLParams().get("direct_storage");
-  var s = fileFetcher.getURLParams().get("storage");
+function insertExternalStyle() {
+  var st = fileFetcher.getURLParams().get("direct_style");
   
-  if(ds)     return `direct_storage=${ds}`;
-  else if(s) return `storage=${s}`;
-  return "";
+  return `direct_style=${encodeURIComponent(st)}`;
+}
+
+function insertStorageArg() {
+  var st = insertExternalStyle();
+  var ds = fileFetcher.getURLParams().get("direct_storage");
+  var s =  fileFetcher.getURLParams().get("storage");
+  
+  if(ds)     return `${st ? `${st}&` : ""}direct_storage=${encodeURIComponent(ds)}`;
+  else if(s) return `${st ? `${st}&` : ""}storage=${encodeURIComponent(s)}`;
+  return st ? st : "";
 }
 
 function insertArguments(post) {
   let s = insertStorageArg();
+  
   if(post) {
     if(s)
-      return `?post=${post}&${s}`;
+      return `index.html?post=${post}&${s}`;
     else
       return `?post=${post}`;
   }
@@ -55,7 +63,7 @@ async function loadMultiplePosts(postArg) {
       var title = postParser.parseRawTitle(content);
   
       var dateArr = path.split("_");
-      var date = `${dateArr[2]}. ${dateArr[1].substring(dateArr[1].indexOf(')') + 1)}. ${dateArr[0]}`;
+      let date = `${dateArr[2].substr(0, 2)}. ${dateArr[1].substr(dateArr[1].indexOf(')') + 1)}. ${dateArr[0]}`;
       document.getElementById("content").innerHTML += `<hr/><h1>${title} (${date})</h1>${postParser.parseRawPost(content)}`;
     } catch (e) {
       document.getElementById("content").innerHTML += e;  
@@ -126,7 +134,15 @@ async function loadBrowserList() {
 
 
 async function main() {
-  await themes.pinThemeSelector();
+  let styleArg = fileFetcher.getURLParams().get("direct_style");
+  if(styleArg == null) await themes.pinThemeSelector();
+  else {
+    document.getElementById("theme_container").style.display = "none";
+    if(styleArg[0] === '"' && styleArg[styleArg.length - 1] === '"')
+      document.head.innerHTML += `<link rel="stylesheet" type="text/css" href=${styleArg}>`;
+    else
+      document.head.innerHTML += `<link rel="stylesheet" type="text/css" href="${styleArg}">`;
+  }
   
   let postArg = fileFetcher.getURLParams().get("post");
   

@@ -14,8 +14,9 @@ To embed your future directory to the system, you should use `direct_storage` ur
 
 `?direct_storage=https://foo.bar/posts`
 
-> [!WARNING]  
+> [!WARNING]
 > Ensure that all elements in the directory are accesible externally. It will use interface of access as for directories with slash`/`.
+> Also argument doesn't need parentacies.
 
 If you have done that, congratulation, you have just embeded the PostViewer to your webpage.
 
@@ -49,3 +50,20 @@ Extension is free to set.
 
 ## /image/
 The directory, where you store all images.
+
+# "post" argument
+The argument, that let you show a post, or it would show a browser if it would not have an argument.
+If you specify the argument with dot`.`, it would definitely show a single post. The Viewer has a 
+capibility to show multiple posts. For that you can put in the argument a number to show the most recent posts.
+The number is a limit how much posts it would show.
+
+# Forced stylesheet
+If you want to have your own style into your version, then you can pass into url argument also `direct_style` like so.
+
+`?direct_style="abc.css"&direct_storage=https://foo.bar/posts`
+
+> [!NOTE]
+> The argument can be accepted with parentacies or without.
+
+With that, you can embed your own style.
+

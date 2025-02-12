@@ -12,24 +12,16 @@
   <div id="content">
     
   </div>
+  <br/>
   <div id="about">
+    <a href="index.html" id="back_linker">Back to Browser</a>
     <div>
-      PostViewer - project to separate rendering posts into separate project to not deploy very often.
-      There you can see my posts.
-      <a href="index.html" id="back_linker">Back to Browser</a>
+      PostViewer - project to separate rendering posts into a module.
     </div>
     <div>Made by Kiwii Devulopir</div>
-    <div>
-      Also you can choose the theme
-      <select id="select_theme">
-      </select>
-    </div>
-    <div>
-      If you want, you can construct post: <a href="constructor.html" id="constructor_linker">here</a>
-    </div>
-    <div>
-      <a href="docs/to_host.md">Documentation to host your posts with PostViewer</a>
-    </div>
+    <div id="theme_container">Theme: <select id="select_theme"></select></div>
+    <div><a target="_blank" href="constructor.html" id="constructor_linker">Post Constructor</a></div>
+    <div><a target="_blank" href="docs/to_host.md">Documentation to host your posts with PostViewer</a></div>
   </div>
   
   <script type="module" src="./index.js"></script>
