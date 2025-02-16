@@ -6,7 +6,7 @@ import * as themes from "./themes.js";
 function insertExternalStyle() {
   var st = fileFetcher.getURLParams().get("direct_style");
   
-  return `direct_style=${encodeURIComponent(st)}`;
+  return st ? `direct_style=${encodeURIComponent(st)}` : "";
 }
 
 function insertStorageArg() {
