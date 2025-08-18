@@ -2,6 +2,7 @@ import * as fileFetcher from "./file_fetcher.js";
 import * as temp from "./temp.js";
 import * as postBase from "./post_base.js";
 import * as postRocket from "./post_rocket.js";
+import * as postMd from "./post_md.js";
 
 
 
@@ -204,6 +205,8 @@ export function getVersion(str = "") {
 export function parseRawTitle(str = "", forcedLang = undefined) {
   let ver = postBase.pickVersion(str);
   if(ver === postRocket.VERSION_IMPORT) return postRocket.parseRawTitle(str);
+  if(ver === postMd.VERSION_IMPORT) return postMd.parseRawTitle(str);
+  
   
   let res = adaptRawString(str,forcedLang);
 
@@ -217,6 +220,8 @@ export function parseRawTitle(str = "", forcedLang = undefined) {
 export function parseRawPost(str = "", forcedLang = undefined) {
   let ver = postBase.pickVersion(str);
   if(ver === postRocket.VERSION_IMPORT) return postRocket.parseRawPost(str);
+  if(ver === postMd.VERSION_IMPORT) return postMd.parseRawPost(str);
+  
   
   let res = adaptRawString(str, forcedLang);
 

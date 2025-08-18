@@ -4,6 +4,9 @@ import * as themes from "./themes.js";
 import * as postBase from "./post_base.js";
 
 const LOCALSTORAGE_DIR = "saved_post_parser_text";
+const LOCALSTORAGEAUTOSAVE_DIR = "autosaved_post_parser_text";
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 await themes.pinThemeSelector();
 
 function insertStorageArg() {
@@ -13,6 +16,21 @@ function insertStorageArg() {
   if(ds)     return `?direct_storage=${ds}`;
   else if(s) return `?storage=${s}`;
   return "";
+}
+
+async function triggerEffectSave() {
+  document.getElementById("buttonSave").style.backgroundColor = "var(--semi)";
+  await delay(3000);
+  document.getElementById("buttonSave").style.backgroundColor = "var(--main)";
+}
+
+async function autosave() {
+  localStorage.setItem(LOCALSTORAGEAUTOSAVE_DIR, document.getElementById("input").value);
+  await triggerEffectSave();
+}
+
+function loadFromAutosave() {
+  document.getElementById("input").value = localStorage.getItem(LOCALSTORAGEAUTOSAVE_DIR);
 }
 
 function updateRaw(text) {
@@ -34,9 +52,10 @@ function update(event) {
     updateRaw(event.target.value);
 }
 
-function save() {
+async function save() {
   localStorage.setItem(LOCALSTORAGE_DIR, document.getElementById("input").value);
   alert("text was saved!");
+  await triggerEffectSave();
 }
 
 function setAutoRender(e) {
@@ -56,6 +75,7 @@ document.getElementById("checkbox_render").onchange = setAutoRender;
 document.getElementById("button_force_render").onclick = () => updateRaw(document.getElementById("input").value);
 
 document.getElementById("input").onkeyup = update;
+document.getElementById("buttonLoadAutosave").onclick = loadFromAutosave;
 
 if (localStorage.getItem(LOCALSTORAGE_DIR) === undefined) {
   localStorage.setItem(LOCALSTORAGE_DIR, document.getElementById("input").value);
@@ -71,3 +91,5 @@ document.getElementById("langArg").onchange = () => {
 document.getElementById("back_linker").href = `index.html${insertStorageArg()}`
 
 updateRaw(localStorage.getItem(LOCALSTORAGE_DIR));
+
+setInterval(autosave, 60000);
