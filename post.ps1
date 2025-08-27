@@ -48,7 +48,7 @@ Write-Host $partition_entry
 Write-Host
 Write-Host $text
 
-$partition_entry >> "../PostStorage/partitions.txt"
+$partition_entry | Out-File "../PostStorage/partitions.txt" -Encoding "ascii" -Append
 
 $text >> "../PostStorage/posts/$date_res"
 
