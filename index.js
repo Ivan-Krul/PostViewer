@@ -49,12 +49,15 @@ async function loadMultiplePosts(postArg) {
   
   try {
     contentLinks = (await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/partitions.txt`)).replaceAll('\r', '').split('\n');
+    if(contentLinks[contentLinks.length - 1].length <= 3) contentLinks.splice(0,1);
   } catch (e) {
     document.getElementById("content").innerHTML = e;
     return;
   }
   
   document.getElementById("content").innerHTML = `<a href="${insertArguments()}">Back to Browser</a>`;
+  
+  
   
   for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg); i--) {
     try {
@@ -102,6 +105,7 @@ async function loadBrowserList() {
   
   try {
     contentLinks = (await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/partitions.txt`)).replaceAll('\r', '').split('\n');
+    if(contentLinks[contentLinks.length - 1].length <= 3) contentLinks.splice(contentLinks.length - 1,1);
   } catch (e) {
     document.getElementById("content").innerHTML = e;
     return;

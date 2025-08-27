@@ -48,10 +48,14 @@ Write-Host $partition_entry
 Write-Host
 Write-Host $text
 
-$partition_entry | Out-File "../PostStorage/partitions.txt" -Encoding "ascii" -Append
+$part = Get-Content "../PostStorage/partitions.txt"
+$part_full = $part + $partition_entry
+$part_full | Out-File "../PostStorage/partitions.txt" -Encoding "ascii"
 
-$text >> "../PostStorage/posts/$date_res"
+$text | Out-File "../PostStorage/posts/$date_res" -Encoding "utf8"
 
 cd "../PostStorage/"
-git commit -a -m "uploaded a post $date_res"
+git add "partitions.txt"
+git add "posts/$date_res"
+git commit -m "uploaded a post $date_resm (with script)"
 git push
