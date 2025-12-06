@@ -61,7 +61,7 @@ async function loadMultiplePosts(postArg) {
   
   for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg - skipped); i--) {
     try {
-      if(!contentLinks[i]) { skipped++ continue; }
+      if(!contentLinks[i]) { skipped++; continue; }
       const path = snipPartitionRowPath(contentLinks[i]);
       content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${path}`);
       var title = postParser.parseRawTitle(content);
