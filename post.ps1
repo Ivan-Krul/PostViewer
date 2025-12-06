@@ -12,7 +12,7 @@ $text = ""
 for($i = 2; $i -lt $content.length; $i += 1) {
   $text += "$($content[$i])`n"
 }
-
+$text = $text -replace "\[imagelink\]", "https://raw.githubusercontent.com/Ivan-Krul/PostStorage/main/image/"
 
 $date_seg = $date -split ' '
 $date_res = "$($date_seg[2]) (o)$($date_seg[1]) $($date_seg[0])"

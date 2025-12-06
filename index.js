@@ -57,11 +57,11 @@ async function loadMultiplePosts(postArg) {
   
   document.getElementById("content").innerHTML = `<a href="${insertArguments()}">Back to Browser</a>`;
   
+  let skipped = 0;
   
-  
-  for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg); i--) {
+  for(let i = contentLinks.length - 1; i >= Math.max(0, contentLinks.length - postArg - skipped); i--) {
     try {
-      if(contentLinks[i]) continue;
+      if(!contentLinks[i]) { skipped++ continue; }
       const path = snipPartitionRowPath(contentLinks[i]);
       content = await fileFetcher.fetchFile(`${fileFetcher.getContentLink()}/posts/${path}`);
       var title = postParser.parseRawTitle(content);
