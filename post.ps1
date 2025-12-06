@@ -57,5 +57,6 @@ $text | Out-File "../PostStorage/posts/$date_res" -Encoding "utf8"
 cd "../PostStorage/"
 git add "partitions.txt"
 git add "posts/$date_res"
+git add "image/*"
 git commit -m "uploaded a post $date_resm (with script)"
 git push
